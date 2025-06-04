@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crescendo | Choose Your Mood</title>
+  <style>
+    body, html {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #dceeff, #f0f7ff);
+      text-align: center;
+      padding: 0;
+      color: #222;
+    }
+
+    /* Topbar styles */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #0077cc;
+      color: white;
+      padding: 12px 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar .left-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+    }
+
+    .topbar .brand-name {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .topbar .welcome-msg {
+      font-size: 1.1rem;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    .right-section {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.15rem;
+    }
+
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #aec9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #2e4a9b;
+      user-select: none;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.7rem;
+      color: white;
+      user-select: none;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 120%;
+      right:  0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      z-index: 200;
+      overflow: hidden;
+      font-weight: 600;
+    }
+
+    .dropdown-content a, 
+    .dropdown-content button {
+      color: #4d90fe;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      background: white;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-content a:hover,
+    .dropdown-content button:hover {
+      background-color: #c2d5ff;
+    }
+
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+
+    /* Mood page styles */
+    .header {
+      background-color: #cde7ff;
+      padding: 25px 20px 20px;
+      border-bottom: 2px solid #9ecfff;
+      position: relative;
+    }
+
+    .back-button {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 22px;
+      color: #3399ff;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      color: #3385ff;
+    }
+
+    .subheading {
+      margin-top: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #1a1a1a;
+      font-size: 26px;
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 30px;
+      max-width: 700px;
+      margin: 30px auto;
+    }
+
+    .emoji-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .emoji-container:hover {
+      transform: scale(1.15);
+    }
+
+    .emoji {
+      font-size: 50px;
+    }
+
+    .emoji-label {
+      font-size: 16px;
+      margin-top: 8px;
+      color: #444;
+    }
+
+    footer {
+      margin-top: 50px;
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
+<!-- Add this to your <head> -->
+<style>
+body.dark-mode {
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #e2e8f0;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+/* Topbar */
+body.dark-mode .topbar {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Dropdown */
+body.dark-mode .dropdown-content {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+  border-radius: 6px;
+}
+
+body.dark-mode .dropdown-content a,
+body.dark-mode .dropdown-content button {
+  color: #a5b8d3;
+  background: transparent;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .dropdown-content a:hover,
+body.dark-mode .dropdown-content button:hover {
+  background-color: #334155;
+  color: #d0dbff;
+}
+
+/* Header */
+body.dark-mode .header {
+  background-color: #1c2a4a;
+  border-bottom: 2px solid #4f7eed;
+  color: #d3e1fa;
+  box-shadow: inset 0 -2px 5px #000a;
+}
+
+body.dark-mode .header h1 {
+  color: #d8e4ff;
+  font-size: 34px;
+  font-weight: 600;
+  margin: 0;
+}
+
+body.dark-mode .subheading {
+  color: #a3b1d1;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* Back button */
+body.dark-mode .back-button {
+  background-color: #273c6a;
+  color: #82aaff;
+  box-shadow: 0 2px 5px rgba(51, 82, 136, 0.8);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .back-button:hover {
+  background-color: #3b5497;
+  color: #c2d5ff;
+}
+
+/* Secondary Heading */
+body.dark-mode h2 {
+  color: #d0e0ff;
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 40px;
+}
+
+/* Emoji grid */
+body.dark-mode .emoji-grid {
+  max-width: 700px;
+  margin: 30px auto;
+  gap: 30px;
+}
+
+body.dark-mode .emoji-container {
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.3s ease;
+  filter: drop-shadow(0 2px 3px #0008);
+}
+
+body.dark-mode .emoji-container:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 10px #82aaffaa);
+}
+
+body.dark-mode .emoji {
+  font-size: 50px;
+}
+
+body.dark-mode .emoji-label {
+  margin-top: 8px;
+  font-size: 17px;
+  color: #c0d6ff;
+  font-weight: 600;
+  user-select: none;
+}
+
+/* Footer */
+body.dark-mode footer {
+  margin-top: 50px;
+  color: #8899bb;
+  font-size: 14px;
+}
+
+/* Theme Toggle */
+body.dark-mode .theme-toggle {
+  color: #e2e8f0;
+  background-color: #334155cc;
+  box-shadow: 0 4px 12px #334155cc;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+body.dark-mode .theme-toggle:hover {
+  background-color: #475569cc;
+  box-shadow: 0 6px 16px #475569cc;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="topbar">
+  <div class="left-section">
+    <div class="brand-name">CRESCENDO,</div>
+    <div class="welcome-msg">welcome <span id="username">User</span>!</div>
+  </div>
+  <div class="right-section">
+    <div class="dropdown" id="profileDropdown">
+      <div class="profile-icon" id="profile-icon">U</div>
+      <div class="dropdown-arrow">▼</div>
+      <div class="dropdown-content" id="dropdown-menu">
+        <a href="dashboard.html">Home</a>
+        <a href="history.html">History</a>
+        <a href="profile.html">Profile</a>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mood Selection Header -->
+<div class="header">
+   <h1>Crescendo</h1>
+  <div class="subheading">Your Personalized Music Journey</div>
+</div>
+
+<h2>How are you feeling today?</h2>
+
+<div class="emoji-grid">
+  <div class="emoji-container" onclick="selectMood('happy')">
+    <div class="emoji">😊</div>
+    <div class="emoji-label">Happy</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('sad')">
+    <div class="emoji">😢</div>
+    <div class="emoji-label">Sad</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('angry')">
+    <div class="emoji">😡</div>
+    <div class="emoji-label">Angry</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('relaxed')">
+    <div class="emoji">😌</div>
+    <div class="emoji-label">Relaxed</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('anxious')">
+    <div class="emoji">😰</div>
+    <div class="emoji-label">Anxious</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('excited')">
+    <div class="emoji">🤩</div>
+    <div class="emoji-label">Excited</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('bored')">
+    <div class="emoji">😐</div>
+    <div class="emoji-label">Bored</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('motivated')">
+    <div class="emoji">💪</div>
+    <div class="emoji-label">Motivated</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('romantic')">
+    <div class="emoji">😍</div>
+    <div class="emoji-label">Romantic</div>
+  </div>
+  <div class="emoji-container" onclick="selectMood('inspired')">
+    <div class="emoji">🌟</div>
+    <div class="emoji-label">Inspired</div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Crescendo. Feel the music.
+</footer>
+
+<script>
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username') || 'User';
+
+  document.getElementById('username').textContent = username;
+  document.getElementById('profile-icon').textContent = username.charAt(0).toUpperCase();
+
+  // Dropdown toggle
+  const dropdown = document.getElementById('profileDropdown');
+  dropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+  });
+
+  // Close dropdown when clicking outside
+  window.addEventListener('click', () => {
+    dropdown.classList.remove('show');
+  });
+
+  // Logout handler
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.clear();
+    window.location.href = 'login.html';
+  });
+
+  function selectMood(mood) {
+    window.location.href = `mood-d.html?feeling=${mood}`;
+  }
+// Auto-apply dark mode on page load if enabled
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crescendo – Select Your Favorite Artists</title>
+  <style>
+    /* Reset & basics */
+    body, html {
+      margin: 0; padding: 0; min-height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f2ff, #e3f0ff);
+      color: #222;
+    }
+
+    /* Top navigation bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #0077cc;
+      color: white;
+      padding: 12px 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar .left-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+    }
+
+    .topbar .left-section .brand-name {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .topbar .left-section .welcome-msg {
+      font-size: 1.1rem;
+      font-weight: 500;
+      opacity: 0.85;
+      color: white;
+    }
+
+    .topbar .right-section {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: white;
+      user-select: none;
+    }
+
+    /* Profile icon circle */
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #aec9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #2e4a9b;
+      position: relative;
+      user-select: none;
+    }
+
+    /* Downward v symbol */
+    .dropdown-arrow {
+      font-size: 0.7rem;
+      color: white;
+      margin-left: 4px;
+      user-select: none;
+    }
+
+    /* Dropdown menu container */
+    .dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      z-index: 200;
+      overflow: hidden;
+      font-weight: 600;
+    }
+
+    /* Dropdown items */
+    .dropdown-content a, 
+    .dropdown-content button {
+      color: #4d90fe;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      background: white;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-content a:hover,
+    .dropdown-content button:hover {
+      background-color: #c2d5ff;
+    }
+
+    /* Show the dropdown on active */
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+
+    /* Header below topbar */
+    .header {
+      background-color: #d0e9ff;
+      padding: 30px 10px 10px;
+      border-bottom: 2px solid #a8d0ff;
+      text-align: center;
+    }
+
+    .header h1 {
+      color: #4a90e2;
+      font-size: 2.5em;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 5px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      font-size: 2em;
+      color: #222;
+      text-align: center;
+    }
+
+    /* Artist grid */
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 10px 40px;
+    }
+
+    .artist {
+      width: 160px;
+      text-align: center;
+      text-decoration: none;
+      color: #222;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    .artist:nth-child(1) { animation-delay: 0.1s; }
+    .artist:nth-child(2) { animation-delay: 0.2s; }
+    .artist:nth-child(3) { animation-delay: 0.3s; }
+    .artist:nth-child(4) { animation-delay: 0.4s; }
+    .artist:nth-child(5) { animation-delay: 0.5s; }
+    .artist:nth-child(6) { animation-delay: 0.6s; }
+    .artist:nth-child(7) { animation-delay: 0.7s; }
+    .artist:nth-child(8) { animation-delay: 0.8s; }
+    .artist:nth-child(9) { animation-delay: 0.9s; }
+    .artist:nth-child(10) { animation-delay: 1s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .artist img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 3px solid #b3d4fc;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .artist:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .artist-name {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #333;
+      font-size: 1em;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .artist {
+        width: 45vw;
+      }
+      .artist img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+<!-- Add this to your <head> -->
+<style>
+ body.dark-mode {
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #e2e8f0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* If you have a .container wrapping content */
+body.dark-mode .container {
+  background: #1e293b;
+  color: #e2e8f0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Topbar/nav */
+body.dark-mode .topbar {
+  background-color: #121b2b; /* Slightly darker than bg for distinction */
+  color: #e2e8f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dropdown container and content */
+body.dark-mode .dropdown-content {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dropdown links */
+body.dark-mode .dropdown-content a,
+body.dark-mode .dropdown-content button {
+  color: #a3bffa;
+  background: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .dropdown-content a:hover,
+body.dark-mode .dropdown-content button:hover {
+  background-color: #334155;
+  color: #e0e7ff;
+}
+
+/* Artist cards */
+body.dark-mode .artist {
+  color: #cbd5e1;
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .artist-name {
+  color: #a3bffa; /* Slightly bright blue for highlight */
+  font-weight: 700;
+}
+
+/* Artist images border and shadow in dark mode */
+body.dark-mode .artist img {
+  border-color: #4f6db0;
+  box-shadow: 0 6px 14px rgba(70, 80, 110, 0.6);
+  transition: box-shadow 0.3s ease;
+}
+
+body.dark-mode .artist:hover img {
+  box-shadow: 0 8px 22px rgba(100, 120, 170, 0.9);
+  transform: scale(1.1);
+}
+
+/* Header below topbar */
+body.dark-mode .header {
+  background-color: #15263c;
+  border-bottom: 2px solid #2c4366;
+  color: #a3bffa;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .header h1 {
+  color: #acc8ff;
+}
+
+body.dark-mode .header p {
+  color: #cbd5e1;
+}
+
+/* Headings */
+body.dark-mode h2 {
+  color: #cbd5e1;
+}
+
+/* Buttons (option-button) if any */
+body.dark-mode .option-button {
+  background-color: #334155;
+  box-shadow: 0 8px 20px rgba(51, 65, 85, 0.6);
+  color: #e2e8f0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .option-button:hover {
+  background-color: #475569;
+  box-shadow: 0 12px 30px rgba(59, 72, 86, 0.8);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #ffffff33;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+  border: 1.5px solid transparent;
+}
+
+.theme-toggle:hover {
+  background-color: #ffffff55;
+}
+
+body.dark-mode .theme-toggle {
+  color: #cbd5e1;
+  background-color: #334155;
+  border-color: #475569;
+}
+
+body.dark-mode .theme-toggle:hover {
+  background-color: #475569;
+  border-color: #64748b;
+}
+
+</style>
+
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="topbar">
+    <div class="left-section">
+      <div class="brand-name">CRESCENDO,</div>
+      <div class="welcome-msg">welcome <span id="username">User</span>!</div>
+    </div>
+    <div class="right-section">
+      <div class="dropdown" id="profileDropdown">
+        <div class="profile-icon" id="profile-icon">U</div>
+        <div class="dropdown-arrow">▼</div>
+        <div class="dropdown-content" id="dropdown-menu">
+          <a href="dashboard.html">Home</a>
+          <a href="history.html">History</a>
+          <a href="profile.html">Profile</a>
+          <button id="logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <div class="header">
+    <h1>Crescendo</h1>
+    <p>Your Personalized Music Journey</p>
+  </div>
+
+  <h2>Select Your Favorite Artists</h2>
+
+  <div class="grid">
+    <a class="artist" href="songs-d.html?artist=arijit_singh">
+      <img src="1.jpg" alt="Arijit Singh" />
+      <p class="artist-name">Arijit Singh</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=shreya_ghoshal">
+      <img src="2.jpg" alt="Shreya Ghoshal" />
+      <p class="artist-name">Shreya Ghoshal</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=sonu_nigam">
+      <img src="3.jpg" alt="Sonu Nigam" />
+      <p class="artist-name">Sonu Nigam</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=kishore_kumar">
+      <img src="4.jpg" alt="Kishore Kumar" />
+      <p class="artist-name">Kishore Kumar</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=lata_mangeshkar">
+      <img src="5.jpg" alt="Lata Mangeshkar" />
+      <p class="artist-name">Lata Mangeshkar</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=udit_narayan">
+      <img src="6.jpg" alt="Udit Narayan" />
+      <p class="artist-name">Udit Narayan</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=ar_rahman">
+      <img src="7.jpg" alt="A.R. Rahman" />
+      <p class="artist-name">A.R. Rahman</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=shankar_mahadevan">
+      <img src="8.jpg" alt="Shankar Mahadevan" />
+      <p class="artist-name">Shankar Mahadevan</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=neha_kakkar">
+      <img src="9.jpg" alt="Neha Kakkar" />
+      <p class="artist-name">Neha Kakkar</p>
+    </a>
+    <a class="artist" href="songs-d.html?artist=papon">
+      <img src="10.jpg" alt="Papon" />
+      <p class="artist-name">Papon</p>
+    </a>
+  </div>
+
+  <script>
+    // Load username from localStorage
+    const usernameSpan = document.getElementById('username');
+    const profileIcon = document.getElementById('profile-icon');
+    const storedUsername = localStorage.getItem('username') || 'User';
+
+    usernameSpan.textContent = storedUsername;
+    profileIcon.textContent = storedUsername.charAt(0).toUpperCase();
+
+    // Dropdown toggle
+    const profileDropdown = document.getElementById('profileDropdown');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    profileDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown if clicking outside
+    window.addEventListener('click', () => {
+      profileDropdown.classList.remove('show');
+    });
+
+    // Logout button logic
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      window.location.href = 'login.html';
+    });
+// Auto-apply dark mode on page load if enabled
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+/* Common Styles */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+a:hover {
+  color: #0077ff;
+}
+
+.navbar {
+  background-color: #222;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links a,
+.nav-links button {
+  margin-left: 15px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.nav-links a.logout {
+  color: #ff4d4d;
+  font-weight: 700;
+}
+
+.nav-links a.logout:hover {
+  color: #ff0000;
+}
+
+.nav-links button:hover,
+.nav-links a:hover {
+  color: #00aaff;
+}
+
+.main-box {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+.options {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: #0077ff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #005ecc;
+}
+
+.mood-grid,
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.mood-card,
+.artist-card {
+  background: #e6f0ff;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.mood-card:hover,
+.artist-card:hover {
+  background-color: #b3d1ff;
+}
+
+.mood-card .emoji,
+.artist-card img {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.artist-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.mood-name {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+
+.playlist-container,
+.history-container {
+  margin-top: 20px;
+}
+
+.song-card,
+.history-item {
+  background: #f0f4ff;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.song-card button {
+  margin-top: 10px;
+  padding: 7px 14px;
+  background-color: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.song-card button:hover {
+  background-color: #005ecc;
+}
+
+.profile-info p {
+  font-size: 1.1rem;
+  margin: 12px 0;
+}
+
+.logout-btn {
+  margin-top: 30px;
+  width: 100%;
+  font-weight: 700;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 500;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  margin: 10px 0;
+  padding: 10px 20px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  background-color: #0077ff;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #005ecc;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+}

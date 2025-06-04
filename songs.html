@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artist Songs</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: #f0f4fa;
+    }
+
+    .left-panel {
+      width: 35%;
+      background-color: #ffffff;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-panel img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 3px solid #357edd;
+    }
+
+    .artist-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .icons {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .icons i {
+      margin: 0 10px;
+      cursor: pointer;
+      color: #357edd;
+      transition: color 0.3s;
+    }
+
+    .icons i:hover {
+      color: #2b65c7;
+    }
+
+    .mood-tags {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .mood-tag {
+      background-color: #357edd;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .right-panel {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #357edd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      color: #2b65c7;
+    }
+
+    .song {
+      background-color: #fff;
+      margin: 15px 0;
+      padding: 15px 20px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .song:hover {
+      background-color: #e6f0ff;
+    }
+
+    .player-bar {
+      background: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .player-bar span {
+      color: #333;
+      font-weight: bold;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 400px;
+      margin-left: 20px;
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="left-panel" id="artist-panel">
+    <!-- Artist info goes here -->
+  </div>
+
+  <div class="right-panel">
+    <div>
+      <a href="select-artist1.html" class="back-link">← Back to Artist Selection</a>
+      <h2 id="artist-title">Songs by Artist</h2>
+      <div id="song-list"></div>
+    </div>
+    <div class="player-bar" id="bottom-player" style="display:none;">
+      <span id="now-playing">Now Playing:</span>
+      <audio id="audioPlayer" controls autoplay></audio>
+    </div>
+  </div>
+
+  <script>
+    const query = new URLSearchParams(window.location.search);
+    const artistKey = query.get('artist');
+
+    const artistMoods = {
+      arijit_singh: ["Romantic", "Melancholic", "Soulful"],
+      shreya_ghoshal: ["Melodic", "Classical", "Soft"],
+      sonu_nigam: ["Energetic", "Versatile", "Smooth"],
+      kishore_kumar: ["Retro", "Classic", "Playful"],
+      lata_mangeshkar: ["Legendary", "Timeless", "Soothing"],
+      udit_narayan: ["Romantic", "Cheerful", "Popular"],
+      ar_rahman: ["Innovative", "Epic", "Fusion"],
+      shankar_mahadevan: ["Dynamic", "Powerful", "Versatile"],
+      neha_kakkar: ["Party", "Pop", "Catchy"],
+      papon: ["Folk", "Soulful", "Unique"]
+    };
+
+    const artistData = {
+      "arijit_singh": {
+        name: "Arijit Singh",
+        image: "1.jpg",
+        songs: [
+          { title: "Tum Hi Ho", file: "songs/arijit/tum_hi_ho.mp3" },
+          { title: "Channa Mereya", file: "songs/arijit/channa_mereya.mp3" },
+          { title: "Raabta", file: "songs/arijit/raabta.mp3" },
+          { title: "Kesariya ", file: "songs/arijit/kesariya.mp3" },
+          { title: "Agar Tum Saath Ho", file: "songs/arijit/agar_tum_saath_ho.mp3" },
+          { title: "Chaleya ", file: "songs/arijit/chaleya.mp3" },
+          { title: "Hamari Adhuri kahani", file: "songs/arijit/hamari_adhuri_kahani.mp3" },
+          { title: "Apna Bana Le", file: "songs/arijit/apna_bana_le.mp3" },
+          { title: "Sajni", file: "songs/arijit/sajni.mp3" },
+          { title: "Soch Na Sake", file: "songs/arijit/soch_na_sake.mp3" }
+        ]
+      },
+      "shreya_ghoshal": {
+        name: "Shreya Ghoshal",
+        image: "2.jpg",
+        songs: [
+          { title: "Teri Ore", file: "songs/shreya/teri_ore.mp3" },
+          { title: "Sun Raha Hai", file: "songs/shreya/sun_raha_hai.mp3" },
+          { title: "Agar Tum Mil Jao", file: "songs/shreya/agar_tum_mil_jao.mp3" },
+          { title: "Saans", file: "songs/shreya/saans.mp3" },
+          { title: "Deewani Mastani", file: "songs/shreya/deewani_mastani.mp3" },
+          { title: "Laung Da Lashkara", file: "songs/shreya/laung_da_lashkara.mp3" },
+          { title: "Manwa Laage", file: "songs/shreya/manwa_laage.mp3" },
+          { title: "Pinga", file: "songs/shreya/pinga.mp3" },
+          { title: "Pal", file: "songs/shreya/pal.mp3" },
+          { title: "Bairi Piya", file: "songs/shreya/bairi_piya.mp3" }
+        ]
+      },
+      "sonu_nigam": {
+        name: "Sonu Nigam",
+        image: "3.jpg",
+        songs: [
+          { title: "Abhi Mujh Mein Kahin", file: "songs/sonu/abhi_mujh_mein_kahin.mp3" },
+          { title: "Kal Ho Naa Ho", file: "songs/sonu/kal_ho_na_ho.mp3" },
+          { title: "Sandese Aate Hain", file: "songs/sonu/sandese.mp3" },
+          { title: "Suraj Hua Maddham", file: "songs/sonu/suraj_hua_maddham.mp3" },
+          { title: "Main Agar Kahoon", file: "songs/sonu/main_agar_kahoon.mp3" },
+          { title: "Do Pal", file: "songs/sonu/do_pal.mp3" },
+          { title: "Tumse Milke Dil Ka", file: "songs/sonu/tumse_milke.mp3" },
+          { title: "Saathiya", file: "songs/sonu/saathiya.mp3" },
+          { title: "Tanhayee", file: "songs/sonu/tanhayee.mp3" },
+          { title: "Pukar", file: "songs/sonu/pukar.mp3" }
+        ]
+      },
+      "kishore_kumar": {
+        name: "Kishore Kumar",
+        image: "4.jpg",
+        songs: [
+          { title: "Roop Tera Mastana", file: "songs/kishore/roop_tera_mastana.mp3" },
+          { title: "Pal Pal Dil Ke Paas", file: "songs/kishore/pal_pal_dil_ke_paas.mp3" },
+          { title: "Mere Sapno Ki Rani", file: "songs/kishore/mere_sapno_ki_rani.mp3" },
+          { title: "Yeh Shaam Mastani", file: "songs/kishore/yeh_shaam_mastani.mp3" },
+          { title: "Khaike Paan Banaraswala", file: "songs/kishore/khaike_paan.mp3" },
+          { title: "Zindagi Ek Safar", file: "songs/kishore/zindagi_ek_safar.mp3" },
+          { title: "O Saathi Re", file: "songs/kishore/o_saathi_re.mp3" },
+          { title: "Chala Jata Hoon", file: "songs/kishore/chala_jata_hoon.mp3" },
+          { title: "Neele Neele Ambar Par", file: "songs/kishore/neele_ambar.mp3" },
+          { title: "Hum Dono Do Premi", file: "songs/kishore/hum_dono.mp3" }
+        ]
+      },
+      "lata_mangeshkar": {
+        name: "Lata Mangeshkar",
+        image: "5.jpg",
+        songs: [
+          { title: "Lag Jaa Gale", file: "songs/lata/lag_jaa_gale.mp3" },
+          { title: "Ajeeb Dastan Hai Yeh", file: "songs/lata/ajeeb_dastan.mp3" },
+          { title: "Tere Bina Zindagi Se", file: "songs/lata/tere_bina_zindagi_se.mp3" },
+          { title: "Pyar Kiya To Darna Kya", file: "songs/lata/pyar_kiya_to_darna_kya.mp3" },
+          { title: "Aap Ki Nazron Ne Samjha", file: "songs/lata/aap_ki_nazron_ne.mp3" },
+          { title: "Tujhe Dekha To", file: "songs/lata/tujhe_dekha_to.mp3" },
+          { title: "Dil To Hai Dil", file: "songs/lata/dil_to_hai_dil.mp3" },
+          { title: "Jab Pyar Kiya To Darna Kya", file: "songs/lata/jab_pyar_kiya_to_darna_kya.mp3" },
+          { title: "Ajeeb Dastaan Hai", file: "songs/lata/ajeeb_dastaan_hai.mp3" },
+          { title: "Sun Sahiba Sun", file: "songs/lata/sun_sahiba_sun.mp3" }
+        ]
+      },
+      "udit_narayan": {
+        name: "Udit Narayan",
+        image: "6.jpg",
+        songs: [
+          { title: "Papa Kehte Hain", file: "songs/udit/papa_kehte_hain.mp3" },
+          { title: "Mitwa", file: "songs/udit/mitwa.mp3" },
+          { title: "Chand Chupa Badal Mein", file: "songs/udit/chand_chupa_badal_mein.mp3" },
+          { title: "Main Yahaan Hoon", file: "songs/udit/main_yahaan_hoon.mp3" },
+          { title: "Kabhi Khushi Kabhi Gham", file: "songs/udit/kabhi_khushi_kabhi_gam.mp3" },
+          { title: "Aaja Shaam Hone Aayee", file: "songs/udit/aaja_shaam_hone_aayee.mp3" },
+          { title: "Dil Ne Yeh Kaha Hai Dil Se", file: "songs/udit/dil_ne_yeh_kaha_hai_dil_se.mp3" },
+          { title: "Tumse Milne Ko Dil", file: "songs/udit/tumse_milne_ko_dil.mp3" },
+          { title: "Tere Bin", file: "songs/udit/tere_bin.mp3" },
+          { title: "Sochenge Tumhe Pyaar", file: "songs/udit/sochenge_tumhe_pyaar.mp3" }
+        ]
+      },
+      "ar_rahman": {
+        name: "A.R. Rahman",
+        image: "7.jpg",
+        songs: [
+          { title: "Jai Ho", file: "songs/arrahman/jai_ho.mp3" },
+          { title: "Chaiyya Chaiyya", file: "songs/arrahman/chaiyya_chaiyya.mp3" },
+          { title: "Tere Bina", file: "songs/arrahman/tere_bina.mp3" },
+          { title: "Kun Faya Kun", file: "songs/arrahman/kun_faya_kun.mp3" },
+          { title: "Vande Mataram", file: "songs/arrahman/vande_mataram.mp3" },
+          { title: "Masakali", file: "songs/arrahman/masakali.mp3" },
+          { title: "Agar Tum Saath Ho", file: "songs/arrahman/agar_tum_saath_ho.mp3" },
+          { title: "Nadaan Parindey", file: "songs/arrahman/nadaan_parindey.mp3" },
+          { title: "Dil Se Re", file: "songs/arrahman/dil_se_re.mp3" },
+          { title: "Tu Hi Re", file: "songs/arrahman/tu_hi_re.mp3" }
+        ]
+      },
+      "shankar_mahadevan": {
+        name: "Shankar Mahadevan",
+        image: "8.jpg",
+        songs: [
+          { title: "Breathless", file: "songs/shankar/breathless.mp3" },
+          { title: "Chaiyya Chaiyya", file: "songs/shankar/chaiyya_chaiyya.mp3" },
+          { title: "Mitwa", file: "songs/shankar/mitwa.mp3" },
+          { title: "Kajra Re", file: "songs/shankar/kajra_re.mp3" },
+          { title: "Yeh Hai Meri Kahani", file: "songs/shankar/yeh_hai_meri_kahani.mp3" },
+          { title: "Sapnay", file: "songs/shankar/sapnay.mp3" },
+          { title: "Rang De Basanti", file: "songs/shankar/rang_de_basanti.mp3" },
+          { title: "Sajda", file: "songs/shankar/sajda.mp3" },
+          { title: "Tanhayee", file: "songs/shankar/tanhayee.mp3" },
+          { title: "Rock On", file: "songs/shankar/rock_on.mp3" }
+        ]
+      },
+      "neha_kakkar": {
+        name: "Neha Kakkar",
+        image: "9.jpg",
+        songs: [
+          { title: "Dilbar", file: "songs/neha/dilbar.mp3" },
+          { title: "Aankh Marey", file: "songs/neha/aankh_marey.mp3" },
+          { title: "Garmi", file: "songs/neha/garmi.mp3" },
+          { title: "Coca Cola", file: "songs/neha/coca_cola.mp3" },
+          { title: "O Saki Saki", file: "songs/neha/o_saki_saki.mp3" },
+          { title: "Kala Chashma", file: "songs/neha/kala_chashma.mp3" },
+          { title: "Laung Da Lashkara", file: "songs/neha/laung_da_lashkara.mp3" },
+          { title: "Nikle Currant", file: "songs/neha/nikle_currant.mp3" },
+          { title: "Chogada", file: "songs/neha/chogada.mp3" },
+          { title: "Cheez Badi", file: "songs/neha/cheez_badi.mp3" }
+        ]
+      },
+      "papon": {
+        name: "Papon",
+        image: "10.jpg",
+        songs: [
+          { title: "Moh Moh Ke Dhaage", file: "songs/papon/moh_moh_ke_dhaage.mp3" },
+          { title: "Jiyein Kyun", file: "songs/papon/jiyein_kyun.mp3" },
+          { title: "Bulleya", file: "songs/papon/bulleya.mp3" },
+          { title: "Kyon", file: "songs/papon/kyon.mp3" },
+          { title: "Jibon Kotha", file: "songs/papon/jibon_kotha.mp3" },
+          { title: "Humnawaz", file: "songs/papon/humnawaz.mp3" },
+          { title: "Mohabbat", file: "songs/papon/mohabbat.mp3" },
+          { title: "Tauba", file: "songs/papon/tauba.mp3" },
+          { title: "Shilong To Sylhet", file: "songs/papon/shilong_to_sylhet.mp3" },
+          { title: "Bawari", file: "songs/papon/bawari.mp3" }
+        ]
+      }
+    };
+
+    function renderArtistPage(artistKey) {
+      const artist = artistData[artistKey];
+      if (!artist) {
+        document.getElementById('artist-title').innerText = "Artist not found";
+        return;
+      }
+
+      // Left panel content
+      const panel = document.getElementById('artist-panel');
+      panel.innerHTML = `
+        <img src="${artist.image}" alt="${artist.name}">
+        <div class="artist-name">${artist.name}</div>
+        <div class="icons">
+          <i class="fas fa-heart" title="Favorite"></i>
+          <i class="fas fa-share-alt" title="Share"></i>
+          <i class="fas fa-info-circle" title="Info"></i>
+        </div>
+        <div class="mood-tags">
+          ${artistMoods[artistKey].map(tag => `<span class="mood-tag">${tag}</span>`).join('')}
+        </div>
+      `;
+
+      // Songs list
+      const songList = document.getElementById('song-list');
+      songList.innerHTML = artist.songs.map(song => `
+  <div class="song">
+    <span>${song.title}</span>
+    <button onclick="playSong('${song.file}', '${song.title}')">▶️ Play</button>
+  </div>
+`).join('');
+
+       document.getElementById('artist-title').innerText = `Songs by ${artist.name}`;
+    }
+
+    function playSong(file, title) {
+      const audioPlayer = document.getElementById('audioPlayer');
+      const nowPlaying = document.getElementById('now-playing');
+      const playerBar = document.getElementById('bottom-player');
+
+      audioPlayer.src = file;
+      audioPlayer.play();
+      nowPlaying.innerText = `Now Playing: ${title}`;
+      playerBar.style.display = 'flex';
+    }
+
+    // On page load, render artist page based on query param
+    window.onload = () => {
+      if (artistKey) {
+        renderArtistPage(artistKey);
+      } else {
+        document.getElementById('artist-title').innerText = "No artist selected";
+      }
+    };
+  </script>
+</body>
+</html>

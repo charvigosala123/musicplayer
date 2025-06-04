@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile – Crescendo</title>
+  <style>
+    /* -- Topbar and Profile Styling (Same as before) -- */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height:100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f2ff, #e3f0ff);
+      color: #222;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #0077cc;
+      color: white;
+      padding: 12px 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar .left-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+    }
+
+    .topbar .brand-name {
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .topbar .welcome-msg {
+      font-size: 1.1rem;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    .right-section {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.15rem;
+    }
+
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #aec9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #2e4a9b;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.7rem;
+      color: white;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      z-index: 200;
+      overflow: hidden;
+      font-weight: 600;
+    }
+
+    .dropdown-content a, 
+    .dropdown-content button {
+      color: #4d90fe;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      background: white;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-content a:hover,
+    .dropdown-content button:hover {
+      background-color: #c2d5ff;
+    }
+
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+
+    .profile-container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .profile-container h2 {
+      text-align: center;
+      color: #4d90fe;
+      margin-bottom: 30px;
+    }
+
+    .profile-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .profile-label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .profile-value {
+      margin-left: 10px;
+      color: #555;
+    }
+  </style>
+<style>
+ body.dark-mode {
+  min-height: 100vh;
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #e2e8f0;
+}
+
+/* Topbar Styling */
+body.dark-mode .topbar {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+/* Profile Container */
+body.dark-mode .profile-container {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .profile-container h2 {
+  color: #38bdf8;
+}
+
+body.dark-mode .profile-label {
+  color: #cbd5e1;
+}
+
+body.dark-mode .profile-value {
+  color: #94a3b8;
+}
+
+/* Dropdown Styling */
+body.dark-mode .dropdown-content {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .dropdown-content a,
+body.dark-mode .dropdown-content button {
+  color: #cbd5e1;
+  background-color: #1e293b;
+}
+
+body.dark-mode .dropdown-content a:hover,
+body.dark-mode .dropdown-content button:hover {
+  background-color: #334155;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #ffffff33;
+  color: white;
+  transition: background-color 0.3s;
+  user-select: none;
+}
+
+.theme-toggle:hover {
+  background-color: #ffffff55;
+}
+
+body.dark-mode .theme-toggle {
+  background-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark-mode .theme-toggle:hover {
+  background-color: #475569;
+}
+
+/* Optional Buttons (if any) */
+body.dark-mode .option-button {
+  background-color: #334155;
+  box-shadow: 0 8px 20px rgba(51, 65, 85, 0.6);
+  color: #e2e8f0;
+}
+
+body.dark-mode .option-button:hover {
+  background-color: #475569;
+  box-shadow: 0 12px 30px rgba(59, 72, 86, 0.8);
+}
+
+</style>
+
+
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="topbar">
+  <div class="left-section">
+    <div class="brand-name">CRESCENDO,</div>
+    <div class="welcome-msg">welcome <span id="username">User</span>!</div>
+  </div>
+  <div class="right-section">
+    <div class="dropdown" id="profileDropdown">
+      <div class="profile-icon" id="profile-icon">U</div>
+      <div class="dropdown-arrow">▼</div>
+      <div class="dropdown-content" id="dropdown-menu">
+        <a href="dashboard.html">Home</a>
+        <a href="history.html">History</a>
+        <a href="profile.html">Profile</a>
+        <button id="logout-btn">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile Info Section -->
+<div class="profile-container">
+  <h2>User Profile</h2>
+  <div class="profile-item">
+    <span class="profile-label">Name:</span>
+    <span class="profile-value" id="profile-name">-</span>
+  </div>
+  <div class="profile-item">
+    <span class="profile-label">Email:</span>
+    <span class="profile-value" id="profile-email">-</span>
+  </div>
+  <div class="profile-item">
+    <span class="profile-label">Joined On:</span>
+    <span class="profile-value" id="profile-date">-</span>
+  </div>
+</div>
+
+<script>
+  const token = localStorage.getItem('token');
+  const dropdown = document.getElementById('profileDropdown');
+
+  dropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+  });
+
+  window.addEventListener('click', () => {
+    dropdown.classList.remove('show');
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.clear();
+    window.location.href = 'login.html';
+  });
+
+  async function fetchUserProfile() {
+    if (!token) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    try {
+      const res = await fetch('http://localhost:5000/api/user/profile', {  /* <-- Changed port 3000 to 5000 */
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!res.ok) throw new Error('Unauthorized or failed to fetch');
+
+      const data = await res.json();
+
+      // Populate profile
+      document.getElementById('username').textContent = data.username;
+      document.getElementById('profile-icon').textContent = data.username.charAt(0).toUpperCase();
+      document.getElementById('profile-name').textContent = data.username;
+      document.getElementById('profile-email').textContent = data.email;
+      document.getElementById('profile-date').textContent = data.created_at;
+
+    } catch (err) {
+      console.error(err);
+      alert('Session expired or error fetching profile.');
+      window.location.href = 'login.html';
+    }
+  }
+
+  fetchUserProfile();
+// Auto-apply dark mode on page load if enabled
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+}
+
+</script>
+</body>
+</html>

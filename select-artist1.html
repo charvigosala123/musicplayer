@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crescendo – Select Your Favorite Artists</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f2ff, #e3f0ff);
+      text-align: center;
+      margin: 0;
+      padding: 0 20px 40px;
+      color: #222;
+    }
+
+    .header {
+      background-color: #d0e9ff;
+      padding: 30px 10px 10px;
+      border-bottom: 2px solid #a8d0ff;
+    }
+
+    .header h1 {
+      color: #4a90e2;
+      font-size: 2.5em;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 5px;
+    }
+
+    .back-arrow {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      text-decoration: none;
+      color: #4a90e2;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 8px 12px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .back-arrow:hover {
+      background-color: #fff;
+    }
+
+    h2 {
+      margin-top: 30px;
+      font-size: 2em;
+      color: #222;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .artist {
+      width: 160px;
+      text-align: center;
+      text-decoration: none;
+      color: #222;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    .artist:nth-child(1) { animation-delay: 0.1s; }
+    .artist:nth-child(2) { animation-delay: 0.2s; }
+    .artist:nth-child(3) { animation-delay: 0.3s; }
+    .artist:nth-child(4) { animation-delay: 0.4s; }
+    .artist:nth-child(5) { animation-delay: 0.5s; }
+    .artist:nth-child(6) { animation-delay: 0.6s; }
+    .artist:nth-child(7) { animation-delay: 0.7s; }
+    .artist:nth-child(8) { animation-delay: 0.8s; }
+    .artist:nth-child(9) { animation-delay: 0.9s; }
+    .artist:nth-child(10) { animation-delay: 1s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .artist img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 3px solid #b3d4fc;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .artist:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .artist-name {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #333;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="page1.html" class="back-arrow">&#8592;</a>
+
+  <div class="header">
+    <h1>Crescendo</h1>
+    <p>Your Personalized Music Journey</p>
+  </div>
+
+  <h2>Select Your Favorite Artists</h2>
+
+  <div class="grid">
+    <a class="artist" href="songs.html?artist=arijit_singh">
+      <img src="1.jpg" alt="Arijit Singh" />
+      <p class="artist-name">Arijit Singh</p>
+    </a>
+    <a class="artist" href="songs.html?artist=shreya_ghoshal">
+      <img src="2.jpg" alt="Shreya Ghoshal" />
+      <p class="artist-name">Shreya Ghoshal</p>
+    </a>
+    <a class="artist" href="songs.html?artist=sonu_nigam">
+      <img src="3.jpg" alt="Sonu Nigam" />
+      <p class="artist-name">Sonu Nigam</p>
+    </a>
+    <a class="artist" href="songs.html?artist=kishore_kumar">
+      <img src="4.jpg" alt="Kishore Kumar" />
+      <p class="artist-name">Kishore Kumar</p>
+    </a>
+    <a class="artist" href="songs.html?artist=lata_mangeshkar">
+      <img src="5.jpg" alt="Lata Mangeshkar" />
+      <p class="artist-name">Lata Mangeshkar</p>
+    </a>
+    <a class="artist" href="songs.html?artist=udit_narayan">
+      <img src="6.jpg" alt="Udit Narayan" />
+      <p class="artist-name">Udit Narayan</p>
+    </a>
+    <a class="artist" href="songs.html?artist=ar_rahman">
+      <img src="7.jpg" alt="A.R. Rahman" />
+      <p class="artist-name">A.R. Rahman</p>
+    </a>
+    <a class="artist" href="songs.html?artist=shankar_mahadevan">
+      <img src="8.jpg" alt="Shankar Mahadevan" />
+      <p class="artist-name">Shankar Mahadevan</p>
+    </a>
+    <a class="artist" href="songs.html?artist=neha_kakkar">
+      <img src="9.jpg" alt="Neha Kakkar" />
+      <p class="artist-name">Neha Kakkar</p>
+    </a>
+    <a class="artist" href="songs.html?artist=papon">
+      <img src="10.jpg" alt="Papon" />
+      <p class="artist-name">Papon</p>
+    </a>
+  </div>
+
+</body>
+</html>

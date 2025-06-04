@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Your Music Experience - Crescendo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e6f0fb, #f8faff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .back-arrow {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      text-decoration: none;
+      color: #4d90fe;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .back-arrow:hover {
+      color: #3b78d8;
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 50px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    .option-button {
+      background-color: #4d90fe;
+      color: white;
+      padding: 16px 30px;
+      margin: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .option-button:hover {
+      background-color: #3b78d8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top-left Back Arrow to login.html -->
+  <a href="login.html" class="back-arrow">← Back to login page</a>
+
+  <div class="container">
+    <h1>What kind of musical journey are you looking for today?</h1>
+
+    <!-- Personalized Playlists option -->
+    <a href="select-artist1.html">
+      <button class="option-button">🎵 Personalized Playlists</button>
+    </a>
+
+    <!-- Stress-Based Music Therapy option -->
+    <a href="stress-threapy.html">
+      <button class="option-button">😌 Stress-Based Music Therapy</button>
+    </a>
+  </div>
+</body>
+</html>

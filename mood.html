@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crescendo | Songs by Mood</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7ff, #f6faff);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #0077cc;
+    }
+
+    #song-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .song-card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      width: 220px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .song-card:hover {
+      transform: scale(1.05);
+    }
+
+    .song-title {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .artist-name {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    /* Player Bar at bottom */
+    #player-bar {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0077cc;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-family: 'Segoe UI', sans-serif;
+      min-width: 320px;
+      max-width: 90vw;
+      visibility: hidden;
+      z-index: 9999;
+    }
+
+    #player-song-info {
+      flex-grow: 1;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    #player-bar button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 0 5px;
+      user-select: none;
+    }
+
+    #player-bar input[type="range"] {
+      width: 100px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="page-title">Loading Songs...</h1>
+  <div id="song-list"></div>
+
+  <!-- 🎵 Audio Player Bar -->
+  <div id="player-bar">
+    <div id="player-song-info">No song playing</div>
+    <button id="player-play" title="Play" disabled>▶️</button>
+    <button id="player-pause" title="Pause" disabled>⏸</button>
+    <button id="player-stop" title="Stop" disabled>⏹</button>
+    <input id="player-volume" type="range" min="0" max="100" value="50" title="Volume" disabled>
+  </div>
+
+  <footer>&copy; 2025 Crescendo</footer>
+
+  <!-- Main script -->
+  <script src="songs.js"></script>
+</body>
+</html>
+

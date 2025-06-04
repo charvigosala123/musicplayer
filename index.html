@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crescendo – AI-Powered Playlist Chatbot</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e6f0fb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 60px 10%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .left {
+      flex: 1;
+      min-width: 300px;
+    }
+    .right {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .title {
+      font-size: 60px;
+      font-weight: bold;
+      color: #4d90fe;
+      text-align: center;
+      margin-top: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlideUp 1.5s ease-out forwards;
+    }
+    @keyframes fadeSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .headline {
+      font-size: 32px;
+      font-weight: bold;
+      color: #000;
+      margin: 10px 0;
+    }
+    .highlight {
+      color: #4d90fe;
+    }
+    .description {
+      font-size: 18px;
+      color: #555;
+      margin: 20px 0;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    .button {
+      background-color: #4d90fe;
+      color: white;
+      font-size: 18px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #3b78d8;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+
+    .features {
+      padding: 80px 10%;
+      background-color: #f9fbff;
+      text-align: center;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .features-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .feature-card {
+      max-width: 400px;
+      margin-bottom: 40px;
+    }
+    .feature-image {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
+  gap: 30px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .feature-grid {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+}
+    .feature {
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    /* Animation */
+    .fade-in {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+    .delay-5 { animation-delay: 1s; }
+    .delay-6 { animation-delay: 1.2s; }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      background-color: #e6f0fb;
+      padding: 60px 10%;
+      color: #333;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+    }
+    .footer-column h3 {
+      margin-bottom: 15px;
+    }
+    .footer-column p {
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    .footer-column p:hover {
+      color: #4d90fe;
+    }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HOME SECTION -->
+  <div class="title" id="home">Crescendo – AI-Powered Playlist Chatbot</div>
+  <div class="container">
+    <div class="left">
+      <div class="headline">Discover Music That Resonates</div>
+      <div class="headline"><span class="highlight">Crescendo: Your Personal DJ</span></div>
+      <div class="headline">Transform Your Listening Experience</div>
+      <div class="description">
+        Crescendo offers a unique way to experience music that adapts to your activities and emotions. With our AI-powered playlist chatbot, you can enjoy personalized soundtracks for every moment—energizing workouts, relaxing evenings, or moments of joy, all tailored to your favorite artists and moods.
+      </div>
+      <a href="login.html"><button class="button">Start Your Music Journey Today</button></a>
+    </div>
+    <div class="right">
+      <img src="musicphone.jpg" alt="Music App" />
+    </div>
+  </div>
+
+ <!-- FEATURES SECTION -->
+<section class="features" id="features">
+  <h2 class="section-title">Transform Your Listening Experience with Crescendo</h2>
+  <div class="features-container">
+    
+    <!-- AI Image Card -->
+    <div class="feature-card fade-in">
+      <img src="AIhead.jpg" alt="AI Head Image" class="feature-image" />
+    </div>
+
+    <!-- 3+3 Grid Feature Cards -->
+    <div class="feature-grid">
+      <div class="feature fade-in delay-1">
+        <div class="icon">🎧</div>
+        <h3>Personalized Playlists</h3>
+        <p>Playlists designed for your activities and moods.</p>
+      </div>
+      <div class="feature fade-in delay-2">
+        <div class="icon">💬</div>
+        <h3>AI-Driven Feedback</h3>
+        <p>Each interaction sharpens your musical experience.</p>
+      </div>
+      <div class="feature fade-in delay-3">
+        <div class="icon">❤️</div>
+        <h3>Emotional Support</h3>
+        <p>Playlists tailored to uplift your spirits.</p>
+      </div>
+      <div class="feature fade-in delay-4">
+        <div class="icon">🩺</div>
+        <h3>Stress Therapy</h3>
+        <p>Use music to restore emotional balance.</p>
+      </div>
+      <div class="feature fade-in delay-5">
+        <div class="icon">🔔</div>
+        <h3>24/7 Companion</h3>
+        <p>Music that follows your rhythm of life.</p>
+      </div>
+      <div class="feature fade-in delay-6">
+        <div class="icon">🚀</div>
+        <h3>Begin Now</h3>
+        <p>Start your personalized music journey today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- FOOTER SECTION -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h2 style="color: #4d90fe;">Crescendo</h2>
+        <h3>AI-Powered Playlist Chatbot</h3>
+        <p>Personalized music playlists curated by AI-driven chatbots.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Menu</h3>
+        <a href="#home"><p>Home</p></a>
+        <a href="#features"><p>Features</p></a>
+        <a href="#features"><p>How it Works</p></a>
+        <a href="#features"><p>Music Therapy</p></a>
+        
+           </div>
+      <div class="footer-column">
+        <h3>Our Services</h3>
+        <p>AI Playlist Generation</p>
+        <p>Emotional Support Music</p>
+        <p>Mood Customization</p>
+        <p>Music Therapy Integration</p>
+        <p>User Feedback Based Playlists</p>
+      </div>
+      <div class="footer-column">
+        <h3>Reach Out</h3>
+        <p>📞 8885757578</p>
+        <p>📧websitemoodmusic@gmail.com</p>
+        <p>📍 INDIA, HYDERABAD</p>
+      </div>
+    </div>
+    <p class="footer-bottom">© Crescendo 2025</p>
+  </footer>
+
+</body>
+</html>
